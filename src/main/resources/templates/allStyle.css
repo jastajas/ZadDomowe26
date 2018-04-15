@@ -1,0 +1,207 @@
+.bodyPart{
+    background-color: #5affc9;
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+.headerDiv {
+    background-color: #3eaf89;
+    width: 1000px;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: stretch;
+    flex-wrap: nowrap;}
+
+.user_details{
+    background: cadetblue;
+    width: 200px;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.portal_name{
+    background: bisque;
+    width: 600px;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.logout_button{
+    background: cadetblue;
+    width: 200px;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+
+.mainDiv {
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.navDiv {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.articleDiv {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.form_part{
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+
+
+.add_button{
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+
+.nameDiv {
+    /*background-color: #00FFFF;*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.nameInput {
+    width: 700px;
+}
+
+.priceDiv {
+    /*background-color: #BDB76B;*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.priceInput {
+    width: 500px;
+}
+
+.categoryDiv {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.defaultCategory {
+    color: #b3b3b3;
+}
+
+.fieldCustom {
+    background: cadetblue;
+    width: 400px;
+    position: relative;
+    left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: 3px groove;
+}
+
+.table_part{
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.all_table{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.tb {
+    border: 1px solid black;
+    border-collapse: collapse;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.adressDiv {
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.streetDiv {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.noDiv {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.cityDiv {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.defaultCity {
+    color: #b3b3b3;
+}
+
+.postcodeDiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}

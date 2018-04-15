@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="allStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body class="bckgd">
+<header class="headerDiv">
+    <div class="user_details">
+        <a href="/userDetails" th:text="${userEdit.getName()} + ' '
+        + ${userEdit.getSurname()}"></a>
+    </div>
+    <div class="portal_name">
+        <a href="/main">SOCIAL EXTRA LIFE</a>
+    </div>
+    <div class="logout_button">
+        <a href="/logout">LOGOUT</a>
+    </div>
+</header>
+<div class="mainDiv">
+    <nav class="list-group navDiv">
+        <a style="text-align: center" href="/main" class="list-group-item list-group-item-action active">STRONA
+            GŁÓWNA</a>
+        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
+            ZNAJOMYCH</a>
+        <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
+        <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
+            PROFIL</a>
+    </nav>
+    <article>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link add_button" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">WYSZUKAJ ZNAJOMYCH
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <form class="card-body" style="width: 700px" method="post" action="/executeEdition" th:object="${userEdit}">
+                    <h2 class="headerName">ZNAJDŹ ZNAJOMEGO</h2><br/>
+
+                    <label for="loginID">Login</label>
+                    <input class="form-control" id="loginID" type="text" name="username" required th:field="*{username}"
+                           th:value="${userEdit.getUsername()}"/><br/>
+
+                    <!--label for="passwordID">Hasło</label-->
+                    <input hidden class="form-control" id="passwordID" type="password" name="password" required th:field="*{password}"
+                           th:value="${userEdit.getPassword()}"/><br/>
+
+                    <label for="firstNameID">Imię</label>
+                    <input class="form-control" id="firstNameID" type="text" name="name" required th:field="*{name}"
+                           th:value="${userEdit.getName()}"/><br/>
+
+                    <label for="lastNameID">Nazwisko</label>
+                    <input class="form-control" id="lastNameID" type="text" name="surname" required th:field="*{surname}"
+                           th:value="${userEdit.getSurname()}"/><br/>
+
+                    <label for="bornDateID">Data urodzenia</label>
+                    <input class="form-control" type="date" id="bornDateID" name="bornDate" required th:field="*{bornDate}"
+                           th:value="${userEdit.getBornDate()}"/><br/>
+
+                    <label for="streetID">Ulica</label>
+                    <input class="form-control" id="streetID" type="text" name="street" required th:field="*{street}"
+                           th:value="${userEdit.getStreet()}"/><br/>
+
+                    <label for="numberID">Numer</label>
+                    <input class="form-control" id="numberID" type="text" name="number" required th:field="*{number}"
+                           th:value="${userEdit.getNumber()}"/><br/>
+
+                    <label for="cityID">Miasto</label>
+                    <select class="custom-select" id="cityID" name="city" required th:field="*{city}">
+                        <option class="defaultCity" th:value="${userEdit.getCity()}" th:text="${userEdit.getCity()}" selected data-default></option>
+                        <option th:each="eachCity : ${cities}" th:value="${eachCity.getName()}" th:text="${eachCity.getName()}"></option>
+                    </select>
+
+                    <label>Kod pocztowy</label>
+                    <input class="form-control" type="text" pattern="[0-9]{2}-[0-9]{3}" required name="postCode"
+                           th:field="*{postCode}" th:value="${userEdit.getPostCode()}">
+                    <input hidden th:value="${userEdit.getId()}" name="id">
+
+                    <div class="buttonDiv">
+                        <input class="btn btn-primary" type="submit" value="ZATWIERDŹ">
+                    </div>
+
+                </form>
+                <br/>
+            </div>
+        </div>
+        <div class="searchDiv">
+
+        </div>
+    </article>
+</div>
+</body>
+</html>

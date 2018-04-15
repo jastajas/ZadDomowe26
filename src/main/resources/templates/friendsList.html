@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="allStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body class="bckgd">
+<header class="headerDiv">
+    <div class="user_details">
+        <a href="/userDetails" th:text="${userInfo.getName()} + ' '
+        + ${userInfo.getSurname()}"></a>
+    </div>
+    <div class="portal_name">
+        <a href="/main">SOCIAL EXTRA LIFE</a>
+    </div>
+    <div class="logout_button">
+        <a href="/logout">LOGOUT</a>
+    </div>
+</header>
+<div class="mainDiv">
+    <nav class="list-group navDiv">
+        <a style="text-align: center" href="/main" class="list-group-item list-group-item-action active">STRONA
+            GŁÓWNA</a>
+        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
+            ZNAJOMYCH</a>
+        <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
+        <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
+            PROFIL</a>
+    </nav>
+    <article>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link add_button" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">WYSZUKAJ ZNAJOMYCH
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
+                <h2 class="headerName">LISTA ZNAJOMYCH</h2><br/>
+
+                <br/>
+                <div>
+                    <table class="tb all_table">
+                        <tr class="tb">
+                            <th class="tb" scope="col" align="center">ID</th>
+                            <th class="tb" scope="col" align="center">IMIĘ</th>
+                            <th class="tb" scope="col" align="center">NAZWISKO</th>
+                            <th class="tb" scope="col" align="center">MIASTO</th>
+                            <th class="tb" scope="col"></th>
+                        </tr>
+                        <tr class="tb" th:each="ui : ${usersInviting}">
+                            <td class="tb" th:text="${ui.getUser_initial().getId()}"></td>
+                            <td class="tb" th:text="${ui.getUser_initial().getName()}"></td>
+                            <td class="tb" th:text="${ui.getUser_initial().getSurname()}"></td>
+                            <td class="tb" th:text="${ui.getUser_initial().getCity()}"></td>
+                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_initial().getId()}">Usuń ze
+                                znajomych</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <table class="tb all_table">
+                        <tr class="tb">
+                            <th class="tb" scope="col" align="center">ID_2</th>
+                            <th class="tb" scope="col" align="center">IMIĘ_2</th>
+                            <th class="tb" scope="col" align="center">NAZWISKO_2</th>
+                            <th class="tb" scope="col" align="center">MIASTO_2</th>
+                            <th class="tb" scope="col"></th>
+                        </tr>
+                        <tr class="tb" th:each="ui : ${usersInvited}">
+                            <td class="tb" th:text="${ui.getUser_invited().getId()}"></td>
+                            <td class="tb" th:text="${ui.getUser_invited().getName()}"></td>
+                            <td class="tb" th:text="${ui.getUser_invited().getSurname()}"></td>
+                            <td class="tb" th:text="${ui.getUser_invited().getCity()}"></td>
+                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_invited().getId()}">Usuń ze
+                                znajomych</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="searchDiv">
+
+        </div>
+    </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LOGOWANIE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body style="background:cadetblue">
+<div style="width: 500px; margin: auto; margin-top: 300px; text-align: center">
+    <h1>LOGOWANIE</h1>
+    <form method="post" action="/register" th:object="${newUser}">
+
+        <label for="loginID">Login</label>
+        <input class="form-control" id="loginID" type="text" name="username" required th:field="*{username}"
+               placeholder="Wpisz nazwę urzytkownika"/><br/>
+
+        <label for="passwordID">Hasło</label>
+        <input class="form-control" id="passwordID" type="password" name="password" required th:field="*{password}"
+               placeholder="Wpisz hasło"/><br/>
+
+        <label for="firstNameID">Imię</label>
+        <input class="form-control" id="firstNameID" type="text" name="name" required th:field="*{name}"
+               placeholder="Wpisz imię"/><br/>
+
+        <label for="lastNameID">Nazwisko</label>
+        <input class="form-control" id="lastNameID" type="text" name="surname" required th:field="*{surname}"
+               placeholder="Wpisz nazwisko"/><br/>
+
+        <label for="bornDateID">Data urodzenia</label>
+        <input class="form-control" type="date" id="bornDateID" name="bornDate" required th:field="*{bornDate}"/><br/>
+
+        <label for="streetID">Ulica</label>
+        <input class="form-control" id="streetID" type="text" name="street" required th:field="*{street}"
+               placeholder="Wpisz nazwę ulicy"/><br/>
+
+        <label for="numberID">Numer</label>
+        <input class="form-control" id="numberID"  type="text" name="number" required th:field="*{number}"
+               placeholder="Wpisz nr miesca zamieszkania"/><br/>
+
+        <label for="cityID">Miasto</label>
+        <select class="custom-select" id="cityID" name="city" required th:field="*{city}">
+            <option class="defaultCity" value="" selected data-default>Wybierz...</option>
+            <option th:each="eachCity : ${cities}" th:value="${eachCity.getName()}" th:text="${eachCity.getName()}"></option>
+        </select>
+
+        <label>Kod pocztowy</label>
+        <input class="form-control" type="text" pattern="[0-9]{2}-[0-9]{3}" required name="postCode"
+               placeholder="xx-xxx" th:field="*{postCode}">
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input class="btn btn-primary" type="submit" value="Zarejestruj"/>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="allStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body class="bckgd">
+<header class="headerDiv">
+    <div class="user_details">
+        <a href="/userDetails" th:text="${userDetails.getName()} + ' '
+        + ${userDetails.getSurname()}"></a>
+    </div>
+    <div class="portal_name">
+        <a href="/main">SOCIAL EXTRA LIFE</a>
+    </div>
+    <div class="logout_button">
+        <a href="/logout">LOGOUT</a>
+    </div>
+</header>
+<div class="mainDiv">
+    <nav class="list-group navDiv">
+        <a style="text-align: center" href="/main" class="list-group-item list-group-item-action active">STRONA
+            GŁÓWNA</a>
+        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
+            ZNAJOMYCH</a>
+        <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
+        <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
+            PROFIL</a>
+    </nav>
+    <article>
+
+            <table class="tb all_table">
+
+                <tr class="tb">
+                    <th class="tb" scope="col" align="center">ID</th>
+                    <td class="tb" th:text="${userDetails.getId()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">IMIĘ</th>
+                    <td class="tb" th:text="${userDetails.getName()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">NAZWISKO</th>
+                    <td class="tb" th:text="${userDetails.getSurname()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">NAZWA UŻYTKOWNIKA</th>
+                    <td class="tb" th:text="${userDetails.getUsername()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">ULICA</th>
+                    <td class="tb" th:text="${userDetails.getStreet()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">NUMER</th>
+                    <td class="tb" th:text="${userDetails.getNumber()}"></td>
+                </tr>
+                <tr>
+                    <th class="tb" scope="col" align="center">MIASTO</th>
+                    <td class="tb" th:text="${userDetails.getCity()}"></td>
+                </tr>
+                <tr>
+                <th class="tb" scope="col" align="center">KOD POCZTOWY</th>
+                <td class="tb" th:text="${userDetails.getPostCode()}"></td>
+                </tr>
+                <tr>
+                <th class="tb" scope="col" align="center">DATA URODZENIA</th>
+                    <td class="tb" th:text="${userDetails.getBornDate()}"></td>
+                </tr>
+            </table>
+
+    </article>
+</div>
+</body>
+</html>
