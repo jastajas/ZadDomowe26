@@ -26,7 +26,9 @@
         <a href="/main">SOCIAL EXTRA LIFE</a>
     </div>
     <div class="logout_button">
-        <a href="/logout">LOGOUT</a>
+        <form method="post" action="logout" th:action="@{/logout}">
+            <input class="btn btn-primary" type="submit" value="logout"/>
+        </form>
     </div>
 </header>
 <div class="mainDiv">

@@ -26,6 +26,11 @@ public class RegTestController {
         this.rr = relationRepository;
     }
 
+    @GetMapping("/")
+    public String redirecting(){
+        return "redirect:/main";
+    }
+
     @GetMapping("/registrationForm")
     public String showRegistrationForm(Model model) {
 
