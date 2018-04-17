@@ -33,12 +33,12 @@
 </header>
 <div class="mainDiv">
     <nav class="list-group navDiv">
-        <a style="text-align: center" href="/main" class="list-group-item list-group-item-action active">STRONA
+        <a style="text-align: center" href="/main" class="list-group-item list-group-item-action">STRONA
             GŁÓWNA</a>
         <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
             ZNAJOMYCH</a>
         <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
-        <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
+        <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action active">EDYTUJ
             PROFIL</a>
     </nav>
     <article>
@@ -46,21 +46,21 @@
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                     <button class="btn btn-link add_button" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="true" aria-controls="collapseOne">WYSZUKAJ ZNAJOMYCH
+                            aria-expanded="true" aria-controls="collapseOne">ZMIEŃ DANE
                     </button>
                 </h5>
             </div>
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <form class="card-body" style="width: 700px" method="post" action="/executeEdition" th:object="${userEdit}">
-                    <h2 class="headerName">ZNAJDŹ ZNAJOMEGO</h2><br/>
+                    <h2 class="headerName">ZMIEŃ DANE</h2><br/>
 
                     <label for="loginID">Login</label>
                     <input class="form-control" id="loginID" type="text" name="username" required th:field="*{username}"
                            th:value="${userEdit.getUsername()}"/><br/>
 
-                    <!--label for="passwordID">Hasło</label-->
-                    <input hidden class="form-control" id="passwordID" type="password" name="password" required th:field="*{password}"
+                    <label for="passwordID">Hasło</label>
+                    <input class="form-control" id="passwordID" type="password" name="password" required th:field="*{password}"
                            th:value="${userEdit.getPassword()}"/><br/>
 
                     <label for="firstNameID">Imię</label>
@@ -92,8 +92,9 @@
                     <label>Kod pocztowy</label>
                     <input class="form-control" type="text" pattern="[0-9]{2}-[0-9]{3}" required name="postCode"
                            th:field="*{postCode}" th:value="${userEdit.getPostCode()}">
-                    <input hidden th:value="${userEdit.getId()}" name="id">
 
+                    <input hidden th:value="${userEdit.getId()}" type="number" name="id">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <div class="buttonDiv">
                         <input class="btn btn-primary" type="submit" value="ZATWIERDŹ">
                     </div>

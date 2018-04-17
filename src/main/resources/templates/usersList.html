@@ -35,11 +35,13 @@
     <nav class="list-group navDiv">
         <a style="text-align: center" href="/main" class="list-group-item list-group-item-action">STRONA
             GŁÓWNA</a>
-        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action active">LISTA
+        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
             ZNAJOMYCH</a>
         <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
         <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
             PROFIL</a>
+        <a style="text-align: center" href="/adminManager" class="list-group-item list-group-item-action active">PANEL
+            ADMINISTRATORA</a>
     </nav>
     <article>
         <div class="card">
@@ -52,9 +54,20 @@
             </div>
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <form class="card-body" style="width: 700px" method="get" action="/adminManager">
+                    <h2 class="headerName">ZNAJDŹ ZNAJOMEGO</h2><br/>
 
-                <h2 class="headerName">LISTA ZNAJOMYCH</h2><br/>
+                    <label>Imię</label>
+                    <input class="form-control" type="text" name="name" placeholder="Wpisz imię">
+                    <br/>
+                    <label>Nazwisko</label>
+                    <input class="form-control" type="text" name="surname" placeholder="Wpisz nazwiasko">
 
+                    <div class="buttonDiv">
+                        <input class="btn btn-primary" type="submit" value="WYSZUKAJ">
+                    </div>
+
+                </form>
                 <br/>
                 <div>
                     <table class="tb all_table">
@@ -64,33 +77,15 @@
                             <th class="tb" scope="col" align="center">NAZWISKO</th>
                             <th class="tb" scope="col" align="center">MIASTO</th>
                             <th class="tb" scope="col"></th>
-                        </tr>
-                        <tr class="tb" th:each="ui : ${usersInviting}">
-                            <td class="tb" th:text="${ui.getUser_initial().getId()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getName()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getSurname()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_initial().getId()}">Usuń ze
-                                znajomych</a></td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <table class="tb all_table">
-                        <tr class="tb">
-                            <th class="tb" scope="col" align="center">ID_2</th>
-                            <th class="tb" scope="col" align="center">IMIĘ_2</th>
-                            <th class="tb" scope="col" align="center">NAZWISKO_2</th>
-                            <th class="tb" scope="col" align="center">MIASTO_2</th>
                             <th class="tb" scope="col"></th>
                         </tr>
-                        <tr class="tb" th:each="ui : ${usersInvited}">
-                            <td class="tb" th:text="${ui.getUser_invited().getId()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getName()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getSurname()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_invited().getId()}">Usuń ze
-                                znajomych</a></td>
+                        <tr class="tb" th:each="su : ${searchedUsers}">
+                            <td class="tb" th:text="${su.getId()}"></td>
+                            <td class="tb" th:text="${su.getName()}"></td>
+                            <td class="tb" th:text="${su.getSurname()}"></td>
+                            <td class="tb" th:text="${su.getCity()}"></td>
+                            <td class="tb"><a th:href="'/blockUser?id=' + ${su.getId()}">Zablokuj</a></td>
+                            <td class="tb"><a th:href="'/deleteUser?id=' + ${su.getId()}">Usuń</a></td>
                         </tr>
                     </table>
                 </div>

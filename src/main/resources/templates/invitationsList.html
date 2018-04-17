@@ -35,9 +35,9 @@
     <nav class="list-group navDiv">
         <a style="text-align: center" href="/main" class="list-group-item list-group-item-action">STRONA
             GŁÓWNA</a>
-        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action active">LISTA
+        <a style="text-align: center" href="/allFriends" class="list-group-item list-group-item-action">LISTA
             ZNAJOMYCH</a>
-        <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action">ZAPROSZENIA</a>
+        <a style="text-align: center" href="/invitations" class="list-group-item list-group-item-action active">ZAPROSZENIA</a>
         <a style="text-align: center" href="/editProfile" class="list-group-item list-group-item-action">EDYTUJ
             PROFIL</a>
     </nav>
@@ -57,6 +57,7 @@
 
                 <br/>
                 <div>
+                    <h2>Zaproszenia otrzymane</h2>
                     <table class="tb all_table">
                         <tr class="tb">
                             <th class="tb" scope="col" align="center">ID</th>
@@ -64,18 +65,21 @@
                             <th class="tb" scope="col" align="center">NAZWISKO</th>
                             <th class="tb" scope="col" align="center">MIASTO</th>
                             <th class="tb" scope="col"></th>
+                            <th class="tb" scope="col"></th>
                         </tr>
                         <tr class="tb" th:each="ui : ${usersInviting}">
                             <td class="tb" th:text="${ui.getUser_initial().getId()}"></td>
                             <td class="tb" th:text="${ui.getUser_initial().getName()}"></td>
                             <td class="tb" th:text="${ui.getUser_initial().getSurname()}"></td>
                             <td class="tb" th:text="${ui.getUser_initial().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_initial().getId()}">Usuń ze
-                                znajomych</a></td>
+                            <td class="tb"><a th:href="'/confirm?id=' + ${ui.getUser_initial().getId()}">Potwierdź</a></td>
+                            <td class="tb"><a th:href="'/refuse?id=' + ${ui.getUser_initial().getId()}">Odrzuć</a></td>
                         </tr>
                     </table>
                 </div>
+                <br/>
                 <div>
+                    <h2>Lista wysłanych zaproszeń</h2>
                     <table class="tb all_table">
                         <tr class="tb">
                             <th class="tb" scope="col" align="center">ID_2</th>
@@ -89,8 +93,7 @@
                             <td class="tb" th:text="${ui.getUser_invited().getName()}"></td>
                             <td class="tb" th:text="${ui.getUser_invited().getSurname()}"></td>
                             <td class="tb" th:text="${ui.getUser_invited().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_invited().getId()}">Usuń ze
-                                znajomych</a></td>
+                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_invited().getId()}">Usuń</a></td>
                         </tr>
                     </table>
                 </div>
