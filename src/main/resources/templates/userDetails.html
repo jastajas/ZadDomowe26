@@ -19,8 +19,8 @@
 <body class="bckgd">
 <header class="headerDiv">
     <div class="user_details">
-        <a href="/userDetails" th:text="${userDetails.getName()} + ' '
-        + ${userDetails.getSurname()}"></a>
+        <a href="/userDetails" th:text="${userLoged.getName()} + ' '
+        + ${userLoged.getSurname()}"></a>
     </div>
     <div class="portal_name">
         <a href="/main">SOCIAL EXTRA LIFE</a>
@@ -43,45 +43,47 @@
     </nav>
     <article>
 
-            <table class="tb all_table">
+        <img th:src="${userDetails.getId()} + '.jpg'" height="200px" width="200px">
 
-                <tr class="tb">
-                    <th class="tb" scope="col" align="center">ID</th>
-                    <td class="tb" th:text="${userDetails.getId()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">IMIĘ</th>
-                    <td class="tb" th:text="${userDetails.getName()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">NAZWISKO</th>
-                    <td class="tb" th:text="${userDetails.getSurname()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">NAZWA UŻYTKOWNIKA</th>
-                    <td class="tb" th:text="${userDetails.getUsername()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">ULICA</th>
-                    <td class="tb" th:text="${userDetails.getStreet()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">NUMER</th>
-                    <td class="tb" th:text="${userDetails.getNumber()}"></td>
-                </tr>
-                <tr>
-                    <th class="tb" scope="col" align="center">MIASTO</th>
-                    <td class="tb" th:text="${userDetails.getCity()}"></td>
-                </tr>
-                <tr>
+        <table class="table all_table">
+
+            <tr class="tb">
+                <th class="tb" scope="col" align="center">ID</th>
+                <td class="tb" th:text="${userDetails.getId()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">IMIĘ</th>
+                <td class="tb" th:text="${userDetails.getName()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">NAZWISKO</th>
+                <td class="tb" th:text="${userDetails.getSurname()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">NAZWA UŻYTKOWNIKA</th>
+                <td class="tb" th:text="${userDetails.getUsername()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">ULICA</th>
+                <td class="tb" th:text="${userDetails.getStreet()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">NUMER</th>
+                <td class="tb" th:text="${userDetails.getNumber()}"></td>
+            </tr>
+            <tr>
+                <th class="tb" scope="col" align="center">MIASTO</th>
+                <td class="tb" th:text="${userDetails.getCity()}"></td>
+            </tr>
+            <tr>
                 <th class="tb" scope="col" align="center">KOD POCZTOWY</th>
                 <td class="tb" th:text="${userDetails.getPostCode()}"></td>
-                </tr>
-                <tr>
+            </tr>
+            <tr>
                 <th class="tb" scope="col" align="center">DATA URODZENIA</th>
-                    <td class="tb" th:text="${userDetails.getBornDate()}"></td>
-                </tr>
-            </table>
+                <td class="tb" th:text="${userDetails.getBornDate()}"></td>
+            </tr>
+        </table>
 
     </article>
 </div>

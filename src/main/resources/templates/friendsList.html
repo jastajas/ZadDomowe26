@@ -56,44 +56,16 @@
                 <h2 class="headerName">LISTA ZNAJOMYCH</h2><br/>
 
                 <br/>
-                <div>
-                    <table class="tb all_table">
-                        <tr class="tb">
-                            <th class="tb" scope="col" align="center">ID</th>
-                            <th class="tb" scope="col" align="center">IMIĘ</th>
-                            <th class="tb" scope="col" align="center">NAZWISKO</th>
-                            <th class="tb" scope="col" align="center">MIASTO</th>
-                            <th class="tb" scope="col"></th>
-                        </tr>
-                        <tr class="tb" th:each="ui : ${usersInviting}">
-                            <td class="tb" th:text="${ui.getUser_initial().getId()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getName()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getSurname()}"></td>
-                            <td class="tb" th:text="${ui.getUser_initial().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_initial().getId()}">Usuń ze
-                                znajomych</a></td>
-                        </tr>
-                    </table>
+                <div class="divFriendTiles">
+                    <div class="card" style="width: 14rem;" th:each="friend : ${allfriends}" >
+                        <img class="card-img-top" style="height: 200px" th:src="${friend.getId()} + '.jpg'" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${friend.getName()} + ' ' + ${friend.getSurname()}"></h5>
+                            <a th:href="'/userDetails?id=' + ${friend.getId()}" class="btn btn-primary">Profil</a>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <table class="tb all_table">
-                        <tr class="tb">
-                            <th class="tb" scope="col" align="center">ID_2</th>
-                            <th class="tb" scope="col" align="center">IMIĘ_2</th>
-                            <th class="tb" scope="col" align="center">NAZWISKO_2</th>
-                            <th class="tb" scope="col" align="center">MIASTO_2</th>
-                            <th class="tb" scope="col"></th>
-                        </tr>
-                        <tr class="tb" th:each="ui : ${usersInvited}">
-                            <td class="tb" th:text="${ui.getUser_invited().getId()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getName()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getSurname()}"></td>
-                            <td class="tb" th:text="${ui.getUser_invited().getCity()}"></td>
-                            <td class="tb"><a th:href="'/delRel?id=' + ${ui.getUser_invited().getId()}">Usuń ze
-                                znajomych</a></td>
-                        </tr>
-                    </table>
-                </div>
+
             </div>
         </div>
         <div class="searchDiv">

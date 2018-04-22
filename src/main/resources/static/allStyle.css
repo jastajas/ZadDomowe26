@@ -9,6 +9,17 @@
     align-items: flex-start;
     flex-wrap: nowrap;
 }
+.divFriendTiles{
+    background-color: rgba(136, 203, 202, 0.35);
+    width: 600px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
 .headerDiv {
     background-color: #3eaf89;
     width: 1000px;

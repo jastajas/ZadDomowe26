@@ -70,7 +70,8 @@
                 </form>
                 <br/>
                 <div>
-                    <table class="tb all_table">
+                    <table class="table">
+                        <thead class="thead-dark">
                         <tr class="tb">
                             <th class="tb" scope="col" align="center">ID</th>
                             <th class="tb" scope="col" align="center">IMIĘ</th>
@@ -78,6 +79,8 @@
                             <th class="tb" scope="col" align="center">MIASTO</th>
                             <th class="tb" scope="col"></th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <tr class="tb" th:each="su : ${searchedUsers}">
                             <td class="tb" th:text="${su.getId()}"></td>
                             <td class="tb" th:text="${su.getName()}"></td>
@@ -85,6 +88,7 @@
                             <td class="tb" th:text="${su.getCity()}"></td>
                             <td class="tb"><a th:href="'/invite?id=' + ${su.getId()}">Zaproś</a></td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -1,7 +1,5 @@
 package com.example.socialnet;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -160,4 +158,5 @@ public class User {
     public void setInvitations(List<Relation> invitations) {
         this.invitations = invitations;
     }
+
 }

@@ -6,17 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class RegTestController {
 
-    UserRepository ur;
-    UserRoleRepository urr;
-    CityRepository cr;
-    RelationRepository rr;
+    private UserRepository ur;
+    private UserRoleRepository urr;
+    private CityRepository cr;
+    private RelationRepository rr;
+
 
     public RegTestController(UserRepository userRepository, UserRoleRepository userRoleRepository,
                              CityRepository cityRepository, RelationRepository relationRepository) {
@@ -38,27 +42,41 @@ public class RegTestController {
         Optional<User> userOptional = ur.findByUsername(principal.getName());
         model.addAttribute("userInfo", userOptional.get());
 
-        if (name == null) {
-            model.addAttribute("searchedUsers", ur.findAll());
-        } else if (!name.equals("") && !surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findByNameAndSurname(name, surname));
-        } else if (!name.equals("") && surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findByName(name));
-        } else if (name.equals("") && !surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findBySurname(surname));
-        }
+        model.addAttribute("searchedUsers", getUsersList(name, surname));
 
         return "index";
     }
 
+    public List<User> getUsersList(String name, String surname){
+        if (name == null) {
+            return ur.findAll();
+        } else if (!name.equals("") && !surname.equals("")) {
+           return ur.findByNameAndSurname(name, surname);
+        } else if (!name.equals("") && surname.equals("")) {
+           return ur.findByName(name);
+        } else if (name.equals("") && !surname.equals("")) {
+            return ur.findBySurname(surname);
+        }
+        return null;
+    }
+
     @GetMapping("/allFriends")
-    public String showAllFriends(Model model, Principal principal) {
+    public String showAllFriends(Model model, Principal principal, SurnameComparator surnameComparator) {
 
         User user = ur.findByUsername(principal.getName()).get();
 
-        model.addAttribute("usersInvited", rr.listAllByUser_initialAndConfirmedIsTrue(user));
+        List<User> allfriends = new ArrayList<>();
 
-        model.addAttribute("usersInviting", rr.listAllByUser_invitedAndConfirmedIsTrue(user));
+        for (Relation relation : rr.listAllByUser_initialAndConfirmedIsTrue(user)) {
+            allfriends.add(relation.getUser_invited());
+        }
+        for (Relation relation : rr.listAllByUser_invitedAndConfirmedIsTrue(user)) {
+            allfriends.add(relation.getUser_initial());
+        }
+
+        Collections.sort(allfriends, surnameComparator);
+
+        model.addAttribute("allfriends", allfriends);
         model.addAttribute("userInfo", ur.findByUsername(principal.getName()).get());
 
         return "friendsList";
@@ -94,7 +112,7 @@ public class RegTestController {
     }
 
     @GetMapping("/confirm")
-    public String confirmInvitattion(Model model, @RequestParam Long id, Principal principal) {
+    public String confirmInvitattion(@RequestParam Long id, Principal principal) {
 
         Optional<User> invitingUser = ur.findById(id);
         Optional<User> invitedUser = ur.findByUsername(principal.getName());
@@ -114,7 +132,7 @@ public class RegTestController {
     }
 
     @GetMapping("/refuse")
-    public String refuseInvitation(Model model, @RequestParam Long id, Principal principal) {
+    public String refuseInvitation(@RequestParam Long id, Principal principal) {
 
         Optional<User> invitingUser = ur.findById(id);
         Optional<Relation> relation = rr.findRelationByUserAndUser(invitingUser.get(), ur.findByUsername(principal.getName()).get());
@@ -135,18 +153,19 @@ public class RegTestController {
         Optional<User> userOptional = ur.findByUsername(principal.getName());
         model.addAttribute("userInfo", userOptional.get());
 
-        if (name == null) {
-            model.addAttribute("searchedUsers", ur.findAll());
-        } else if (!name.equals("") && !surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findByNameAndSurname(name, surname));
-        } else if (!name.equals("") && surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findByName(name));
-        } else if (name.equals("") && !surname.equals("")) {
-            model.addAttribute("searchedUsers", ur.findBySurname(surname));
-        }
+            model.addAttribute("searchedUsers", getUsersList(name,surname));
 
         return "usersList";
     }
+
+   /* @GetMapping("/delRel")
+    public String deleteRelation(@RequestParam Long id){
+        Optional<User> invitedUser = ur.findById(id);
+        Optional<Relation>
+        if (invitedUser.isPresent()){
+
+        }
+    }*/
 
     @GetMapping("/blockUser")
     public String blockUser(@RequestParam Long id) {
@@ -177,13 +196,28 @@ public class RegTestController {
 
 
     @RequestMapping("/userDetails")
-    public String showUserDetail(Model model, Principal principal) {
+    public String showUserDetail(Model model, Principal principal, @RequestParam(required = false) Long id, @RequestParam (required = false) String pathName){
 
-        Optional<User> userOptional = ur.findByUsername(principal.getName());
-        model.addAttribute("userDetails", userOptional.get());
+        Optional<User> userLoged = ur.findByUsername(principal.getName());
+        model.addAttribute("userLoged",userLoged.get());
 
+        if(id == null) {
+            model.addAttribute("userDetails", userLoged.get());
+        } else {
+            Optional<User> userDetails = ur.findById(id);
+            model.addAttribute("userDetails", userDetails.get());
+        }
+        try{
+            System.out.println(pathName);
+        if(pathName != null && id == null) {
+            Files.copy(Paths.get(pathName), Paths.get(userLoged.get().getId() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
+        }
+        }catch (IOException a){
+            System.out.println("Error");
+        }
         return "userDetails";
     }
+
 
     @GetMapping("/editProfile")
     public String editUserDetail(Model model, Principal principal) {
@@ -198,7 +232,7 @@ public class RegTestController {
     }
 
     @PostMapping("/executeEdition")
-    public String editUser(User user, Principal principal, @RequestParam Long id) {
+    public String editUser(User user, Principal principal) {
         User logedUser = ur.findByUsername(principal.getName()).get();
 
         if (!logedUser.getUsername().equals(user.getUsername())) {
@@ -223,14 +257,14 @@ public class RegTestController {
         return "redirect:/userDetails";
     }
 
-    @GetMapping("/koduj")
+/*    @GetMapping("/koduj")
     @ResponseBody
     public String koduj(@RequestParam String sth) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(sth);
 
         return encode;
-    }
+    }*/
 
     @GetMapping("/login")
     public String login() {
