@@ -45,6 +45,12 @@
 
         <img th:src="${userDetails.getId()} + '.jpg'" height="200px" width="200px">
 
+        <form method="post" action="/userDetails" enctype="multipart/form-data">
+            <input type="file" name="pathName">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="submit" value="Wprowadź">
+        </form>
+
         <table class="table all_table">
 
             <tr class="tb">

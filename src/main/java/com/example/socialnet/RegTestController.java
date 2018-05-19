@@ -1,15 +1,16 @@
 package com.example.socialnet;
 
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.util.*;
 
@@ -20,14 +21,17 @@ public class RegTestController {
     private UserRoleRepository urr;
     private CityRepository cr;
     private RelationRepository rr;
+   // private MailSenderSocial mss;
+
 
 
     public RegTestController(UserRepository userRepository, UserRoleRepository userRoleRepository,
-                             CityRepository cityRepository, RelationRepository relationRepository) {
+                             CityRepository cityRepository, RelationRepository relationRepository /*MailSenderSocial mailSenderSocial*/) {
         this.ur = userRepository;
         this.urr = userRoleRepository;
         this.cr = cityRepository;
         this.rr = relationRepository;
+      //  this.mss = mailSenderSocial;
     }
 
     @GetMapping("/")
@@ -47,13 +51,23 @@ public class RegTestController {
         return "index";
     }
 
-    public List<User> getUsersList(String name, String surname){
+//    @GetMapping("/sendMail")
+//    public String sendMail() {
+//        try {
+//            mss.sendSimpleMessage();
+//        }catch (MailException e){
+//            e.printStackTrace();;
+//        }
+//        return "redirect:/main";
+//    }
+
+    public List<User> getUsersList(String name, String surname) {
         if (name == null) {
             return ur.findAll();
         } else if (!name.equals("") && !surname.equals("")) {
-           return ur.findByNameAndSurname(name, surname);
+            return ur.findByNameAndSurname(name, surname);
         } else if (!name.equals("") && surname.equals("")) {
-           return ur.findByName(name);
+            return ur.findByName(name);
         } else if (name.equals("") && !surname.equals("")) {
             return ur.findBySurname(surname);
         }
@@ -153,7 +167,7 @@ public class RegTestController {
         Optional<User> userOptional = ur.findByUsername(principal.getName());
         model.addAttribute("userInfo", userOptional.get());
 
-            model.addAttribute("searchedUsers", getUsersList(name,surname));
+        model.addAttribute("searchedUsers", getUsersList(name, surname));
 
         return "usersList";
     }
@@ -196,24 +210,22 @@ public class RegTestController {
 
 
     @RequestMapping("/userDetails")
-    public String showUserDetail(Model model, Principal principal, @RequestParam(required = false) Long id, @RequestParam (required = false) String pathName){
+    public String showUserDetail(Model model, Principal principal, @RequestParam(required = false) Long id, @RequestParam(required = false) MultipartFile pathName) throws IOException {
 
         Optional<User> userLoged = ur.findByUsername(principal.getName());
-        model.addAttribute("userLoged",userLoged.get());
+        model.addAttribute("userLoged", userLoged.get());
 
-        if(id == null) {
+        if (id == null) {
             model.addAttribute("userDetails", userLoged.get());
         } else {
             Optional<User> userDetails = ur.findById(id);
             model.addAttribute("userDetails", userDetails.get());
         }
-        try{
-            System.out.println(pathName);
-        if(pathName != null && id == null) {
-            Files.copy(Paths.get(pathName), Paths.get(userLoged.get().getId() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
-        }
-        }catch (IOException a){
-            System.out.println("Error");
+        if (pathName != null) {
+
+            OutputStream outputStream = new FileOutputStream("C:\\Users\\Madi_i_Jack\\IdeaProjects\\socialnet\\src\\main\\resources\\static\\" + userLoged.get().getId() + ".jpg");
+            outputStream.write(pathName.getBytes());
+            outputStream.close();
         }
         return "userDetails";
     }
@@ -236,10 +248,10 @@ public class RegTestController {
         User logedUser = ur.findByUsername(principal.getName()).get();
 
         if (!logedUser.getUsername().equals(user.getUsername())) {
-           List<UserRole> roleList = urr.findByUsername(logedUser.getUsername());
-           UserRole userRole = null;
+            List<UserRole> roleList = urr.findByUsername(logedUser.getUsername());
+            UserRole userRole = null;
 
-           for (int i = 0; i < roleList.size(); i++) {
+            for (int i = 0; i < roleList.size(); i++) {
                 userRole = roleList.get(i);
                 userRole.setUsername(user.getUsername());
                 urr.save(userRole);

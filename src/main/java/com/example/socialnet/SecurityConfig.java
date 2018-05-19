@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/adminManager").hasRole("ADMIN")
                     .antMatchers("/blockUser").hasRole("ADMIN")
                     .antMatchers("/deleteUser").hasRole("ADMIN")
+                    .antMatchers("/sendMail").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .logout()
