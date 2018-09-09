@@ -1,6 +1,8 @@
 package com.example.socialnet;
 
 import org.springframework.mail.MailException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,8 +25,8 @@ public class RegTestController {
     private UserRoleRepository urr;
     private CityRepository cr;
     private RelationRepository rr;
-   // private MailSenderSocial mss;
 
+    // private MailSenderSocial mss;
 
 
     public RegTestController(UserRepository userRepository, UserRoleRepository userRoleRepository,
@@ -31,7 +35,7 @@ public class RegTestController {
         this.urr = userRoleRepository;
         this.cr = cityRepository;
         this.rr = relationRepository;
-      //  this.mss = mailSenderSocial;
+        //  this.mss = mailSenderSocial;
     }
 
     @GetMapping("/")
@@ -75,7 +79,7 @@ public class RegTestController {
     }
 
     @GetMapping("/allFriends")
-    public String showAllFriends(Model model, Principal principal, SurnameComparator surnameComparator) {
+    public String showAllFriends(Model model, Principal principal, SurnameComparator surnameComparator, HttpServletRequest request) {
 
         User user = ur.findByUsername(principal.getName()).get();
 
@@ -92,6 +96,14 @@ public class RegTestController {
 
         model.addAttribute("allfriends", allfriends);
         model.addAttribute("userInfo", ur.findByUsername(principal.getName()).get());
+        //request.isUserInRole("ROLE_USER");
+
+        //Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+//        for (SimpleGrantedAuthority authority : authorities) {
+//            System.out.println(authority.toString());
+//
+//        }
 
         return "friendsList";
     }
@@ -112,6 +124,7 @@ public class RegTestController {
         model.addAttribute("userInfo", logedUser);
         return "redirect:/invitations";
     }
+
 
     @GetMapping("/invitations")
     public String showAllInvitation(Model model, Principal principal) {
@@ -269,14 +282,14 @@ public class RegTestController {
         return "redirect:/userDetails";
     }
 
-/*    @GetMapping("/koduj")
+    @GetMapping("/koduj")
     @ResponseBody
     public String koduj(@RequestParam String sth) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(sth);
 
         return encode;
-    }*/
+    }
 
     @GetMapping("/login")
     public String login() {

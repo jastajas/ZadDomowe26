@@ -7,6 +7,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -22,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/registrationForm").permitAll()
                     .antMatchers("/register").permitAll()
                     .antMatchers("/main").hasRole("USER")
+                    .antMatchers("/api/users/").hasRole("USER")
                     .antMatchers("/editUser").hasRole("USER")
                     .antMatchers("/executeEdition").hasRole("USER")
                     .antMatchers("/userDetails").hasRole("USER")

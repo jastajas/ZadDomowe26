@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Main</title>
     <link rel="stylesheet" href="allStyle.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -24,6 +25,7 @@
     </div>
     <div class="portal_name">
         <a href="/main">SOCIAL EXTRA LIFE</a>
+        <button type="button" onclick="hybaTo()">TAKIETAM</button>
     </div>
     <div class="logout_button">
         <form method="post" action="logout" th:action="@{/logout}">
@@ -73,5 +75,16 @@
         </div>
     </article>
 </div>
+<script>
+    function hybaTo(){
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:8080/api/users/2", true);
+        xhr.onload = function(){
+            var obj1 = JSON.parse(xhr.responseText);
+            console.log(obj1);
+        }
+        xhr.send();
+    }
+</script>
 </body>
 </html>

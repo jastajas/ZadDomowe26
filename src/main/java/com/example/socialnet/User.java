@@ -1,11 +1,15 @@
 package com.example.socialnet;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class User {
+public class User implements Serializable{
+    private static final long serialVersionUID = 8539936152170847419L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -159,4 +163,29 @@ public class User {
         this.invitations = invitations;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                isEnabled() == user.isEnabled() &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getSurname(), user.getSurname()) &&
+                Objects.equals(getBornDate(), user.getBornDate()) &&
+                Objects.equals(getStreet(), user.getStreet()) &&
+                Objects.equals(getNumber(), user.getNumber()) &&
+                Objects.equals(getCity(), user.getCity()) &&
+                Objects.equals(getPostCode(), user.getPostCode()) &&
+                Objects.equals(getRelations(), user.getRelations()) &&
+                Objects.equals(getInvitations(), user.getInvitations());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getUsername(), getPassword(), isEnabled(), getName(), getSurname(), getBornDate(), getStreet(), getNumber(), getCity(), getPostCode(), getRelations(), getInvitations());
+    }
 }
